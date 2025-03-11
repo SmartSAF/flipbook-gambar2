@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipbook Gambar Bisnis 2025</title>
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.1/turn.min.css">
+</head>
+<body>
+    <!-- Tombol Navigasi -->
+    <div class="nav-button left" onclick="flipPrev()">&#10094;</div>
+    <div class="nav-button right" onclick="flipNext()">&#10095;</div>
+
+    <!-- Flipbook -->
+    <div id="flipbook">
+        <!-- Halaman 1 -->
+        <div class="page">
+            <img src="images/image1.png" alt="Gambar 1">
+        </div>
+
+        <!-- Halaman 2 -->
+        <div class="page">
+            <img src="images/image2.png" alt="Gambar 2">
+        </div>
+
+        <!-- Halaman 3 -->
+        <div class="page">
+            <img src="images/image3.png" alt="Gambar 3">
+        </div>
+
+        <!-- Halaman 4 -->
+        <div class="page">
+            <img src="images/image4.png" alt="Gambar 4">
+        </div>
+
+        <!-- Halaman 5 -->
+        <div class="page">
+            <img src="images/image5.png" alt="Gambar 5">
+        </div>
+    </div>
+
+    <!-- Daftar Isi -->
+    <div class="table-of-contents">
+        <button onclick="goToPage(1)">Halaman 1</button>
+        <button onclick="goToPage(2)">Halaman 2</button>
+        <button onclick="goToPage(3)">Halaman 3</button>
+        <button onclick="goToPage(4)">Halaman 4</button>
+        <button onclick="goToPage(5)">Halaman 5</button>
+    </div>
+
+    <!-- Load jQuery dari CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Load Turn.js dari folder javascript -->
+    <script src="javascript/turn.min.js"></script>
+    <!-- Efek Suara -->
+    <audio id="pageSound" src="sounds/page-flip.mp3"></audio>
+    <!-- Script Flipbook -->
+    <script>
+        $(document).ready(function() {
+            const flipbook = $('#flipbook');
+
+            // Inisialisasi Turn.js
+            flipbook.turn({
+                width: 800,
+                height: 600,
+                autoCenter: true,
+                duration: 1000, // Durasi animasi flip
+                acceleration: true, // Aktifkan percepatan animasi
+                gradients: true, // Efek gradien saat flip
+                display: 'double', // Tampilkan dua halaman sekaligus (seperti buku)
+                when: {
+                    turning: function(e, page, view) {
+                        playSound(); // Memutar suara saat halaman dibalik
+                    }
+                }
+            });
+
+            // Fungsi untuk memutar suara
+            function playSound() {
+                const sound = document.getElementById('pageSound');
+                sound.currentTime = 0; // Reset suara ke awal
+                sound.play();
+            }
+
+            // Fungsi untuk membalik ke halaman sebelumnya
+            function flipPrev() {
+                flipbook.turn('previous');
+            }
+
+            // Fungsi untuk membalik ke halaman berikutnya
+            function flipNext() {
+                flipbook.turn('next');
+            }
+
+            // Fungsi untuk menuju halaman tertentu
+            function goToPage(page) {
+                flipbook.turn('page', page);
+            }
+        });
+    </script>
+</body>
+</html>
